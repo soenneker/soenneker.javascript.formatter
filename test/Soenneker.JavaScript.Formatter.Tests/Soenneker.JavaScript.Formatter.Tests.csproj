@@ -25,10 +25,5 @@
     <ItemGroup>
         <ProjectReference Include="..\..\src\Soenneker.JavaScript.Formatter\Soenneker.JavaScript.Formatter.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-        <Content Include="testconfig.json">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-    </ItemGroup>
 </Project>
+
