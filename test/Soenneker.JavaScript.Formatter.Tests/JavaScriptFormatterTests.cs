@@ -2,22 +2,21 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Soenneker.JavaScript.Formatter.Abstract;
-using Soenneker.Tests.FixturedUnit;
-using Xunit;
+using Soenneker.Tests.HostedUnit;
 
 namespace Soenneker.JavaScript.Formatter.Tests;
 
-[Collection("Collection")]
-public sealed class JavaScriptFormatterTests : FixturedUnitTest
+[ClassDataSource<Host>(Shared = SharedType.PerTestSession)]
+public sealed class JavaScriptFormatterTests : HostedUnitTest
 {
     private readonly IJavaScriptFormatter _util;
 
-    public JavaScriptFormatterTests(Fixture fixture, ITestOutputHelper output) : base(fixture, output)
+    public JavaScriptFormatterTests(Host host) : base(host)
     {
         _util = Resolve<IJavaScriptFormatter>(true);
     }
 
-    [Fact]
+    [Test]
     public async ValueTask PrettyPrint_should_format_script()
     {
         var cancellationToken = TestContext.Current.CancellationToken;
@@ -31,7 +30,7 @@ public sealed class JavaScriptFormatterTests : FixturedUnitTest
         Assert.Contains("        return value.b + 1;", result);
     }
 
-    [Fact]
+    [Test]
     public async ValueTask Normalize_should_compact_script()
     {
         var cancellationToken = TestContext.Current.CancellationToken;
@@ -47,7 +46,7 @@ public sealed class JavaScriptFormatterTests : FixturedUnitTest
         Assert.Equal("function test(){const value={a:1,b:2};return value.a+value.b}", result);
     }
 
-    [Fact]
+    [Test]
     public async ValueTask SavePrettyPrintedFile_should_write_destination_file()
     {
         var cancellationToken = TestContext.Current.CancellationToken;
