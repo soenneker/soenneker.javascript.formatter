@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 namespace Soenneker.JavaScript.Formatter.Abstract;
 
 /// <summary>
-/// Provides utilities for formatting, pretty-printing, normalizing, reading, and saving JavaScript content.
+/// Parses and serializes JavaScript strings and files in readable or compact form.
 /// </summary>
 public interface IJavaScriptFormatter
 {
     /// <summary>
-    /// Pretty-prints the specified JavaScript with indentation and readable formatting.
+    /// Parses and serializes JavaScript with four-space indentation and readable formatting.
     /// </summary>
     /// <param name="javaScript">The JavaScript content to pretty-print.</param>
     /// <param name="cancellationToken">A cancellation token.</param>
@@ -17,7 +17,7 @@ public interface IJavaScriptFormatter
     ValueTask<string> PrettyPrint(string? javaScript, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Normalizes the specified JavaScript into a consistent serialized form without pretty-print indentation.
+    /// Parses and serializes JavaScript into a compact, consistent form.
     /// </summary>
     /// <param name="javaScript">The JavaScript content to normalize.</param>
     /// <param name="cancellationToken">A cancellation token.</param>
