@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using AwesomeAssertions;
 using Soenneker.JavaScript.Formatter.Abstract;
@@ -18,9 +19,8 @@ public sealed class JavaScriptFormatterTests : HostedUnitTest
     }
 
     [Test]
-    public async ValueTask PrettyPrint_should_format_script()
+    public async ValueTask PrettyPrint_should_format_script(CancellationToken cancellationToken)
     {
-        var cancellationToken = System.Threading.CancellationToken.None;
         const string source = "function test(){const value={a:1,b:2};if(value.a){return value.b+1;}return 0;}";
 
         string result = await _util.PrettyPrint(source, cancellationToken);
@@ -32,9 +32,8 @@ public sealed class JavaScriptFormatterTests : HostedUnitTest
     }
 
     [Test]
-    public async ValueTask Normalize_should_compact_script()
+    public async ValueTask Normalize_should_compact_script(CancellationToken cancellationToken)
     {
-        var cancellationToken = System.Threading.CancellationToken.None;
         const string source = """
                               function test() {
                                   const value = { a: 1, b: 2 };
@@ -48,9 +47,8 @@ public sealed class JavaScriptFormatterTests : HostedUnitTest
     }
 
     [Test]
-    public async ValueTask SavePrettyPrintedFile_should_write_destination_file()
+    public async ValueTask SavePrettyPrintedFile_should_write_destination_file(CancellationToken cancellationToken)
     {
-        var cancellationToken = System.Threading.CancellationToken.None;
         string directory = Path.Combine(Path.GetTempPath(), $"soenneker-js-formatter-{Guid.NewGuid():N}");
         Directory.CreateDirectory(directory);
 
