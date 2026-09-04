@@ -16,6 +16,7 @@ using Soenneker.Utils.File.Abstract;
 
 namespace Soenneker.JavaScript.Formatter;
 
+/// <inheritdoc cref="IJavaScriptFormatter" />
 public sealed class JavaScriptFormatter : IJavaScriptFormatter
 {
     private static readonly ParserOptions _parserOptions = new()
