@@ -134,9 +134,7 @@ public sealed class JavaScriptFormatter : IJavaScriptFormatter
 
         string input = StripBom(javaScript);
         Program program = ParseProgram(input);
-        string output = await Serialize(program, pretty).NoSync();
-
-        return TrimTrailingLineEndings(output);
+        return await Serialize(program, pretty).NoSync();
     }
 
     private static Program ParseProgram(string input)
@@ -177,7 +175,7 @@ public sealed class JavaScriptFormatter : IJavaScriptFormatter
         converter.Convert(program);
         textWriter.Finish();
 
-        return builder.ToString();
+        return TrimTrailingLineEndings(builder);
     }
 
     private static bool LooksLikeModule(string javaScript)
@@ -191,8 +189,11 @@ public sealed class JavaScriptFormatter : IJavaScriptFormatter
         return value.Length > 0 && value[0] == '\uFEFF' ? value[1..] : value;
     }
 
-    private static string TrimTrailingLineEndings(string value)
+    private static string TrimTrailingLineEndings(StringBuilder builder)
     {
-        return value.TrimEnd('\r', '\n');
+        int length = builder.Length;
+        while (length > 0 && builder[length - 1] is '\r' or '\n')
+            length--;
+        return builder.ToString(0, length);
     }
 }
