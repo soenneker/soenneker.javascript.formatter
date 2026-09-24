@@ -1,3 +1,4 @@
+using Soenneker.Utils.File.Abstract;
 using System;
 using System.IO;
 using System.Threading;
@@ -11,10 +12,13 @@ namespace Soenneker.JavaScript.Formatter.Tests;
 [ClassDataSource<Host>(Shared = SharedType.PerTestSession)]
 public sealed class JavaScriptFormatterTests : HostedUnitTest
 {
+    private readonly IFileUtil _fileUtil;
+
     private readonly IJavaScriptFormatter _util;
 
     public JavaScriptFormatterTests(Host host) : base(host)
     {
+        _fileUtil = Resolve<IFileUtil>(true);
         _util = Resolve<IJavaScriptFormatter>(true);
     }
 
@@ -57,11 +61,11 @@ public sealed class JavaScriptFormatterTests : HostedUnitTest
             string sourcePath = Path.Combine(directory, "source.js");
             string destinationPath = Path.Combine(directory, "formatted.js");
 
-            await File.WriteAllTextAsync(sourcePath, "if(true){console.log('x')}", cancellationToken);
+            await _fileUtil.Write(sourcePath, "if(true){console.log('x')}", cancellationToken: cancellationToken);
 
             await _util.SavePrettyPrintedFile(sourcePath, destinationPath, log: false, cancellationToken);
 
-            string result = await File.ReadAllTextAsync(destinationPath, cancellationToken);
+            string result = await _fileUtil.Read(destinationPath, cancellationToken: cancellationToken);
 
             result.Should().Contain("if (true)");
             result.Should().Contain("console.log('x')");
