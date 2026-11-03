@@ -46,7 +46,7 @@
     <ItemGroup>
         <PackageReference Include="Acornima.Extras" Version="1.9.1" />
         <PackageReference Include="Soenneker.Utils.Directory" Version="11.0.972" />
-        <PackageReference Include="Soenneker.Utils.File" Version="11.0.2332" />
+        <PackageReference Include="Soenneker.Utils.File" Version="11.0.2333" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Soenneker.Extensions.ValueTask" Version="4.0.133" />
